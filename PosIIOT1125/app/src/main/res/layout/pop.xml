@@ -1,0 +1,97 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_centerHorizontal="true"
+    android:background="#AA336699" >
+
+    <Button
+        android:id="@+id/PosButton2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingRight="0dp"
+        android:text="Washroom"
+        android:gravity="center"
+        android:textSize="14dp"
+        android:background="@drawable/buttonstyle"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/PosButton3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingRight="0dp"
+        android:text="Tsung Dao LEE Library Hall"
+        android:textSize="14dp"
+        android:background="@drawable/buttonstyle"
+        android:gravity="center"
+        android:layout_below="@+id/PosButton2"
+        android:layout_alignStart="@+id/PosButton2" />
+
+    <Button
+        android:id="@+id/PosButton4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingRight="0dp"
+        android:text="Tsung Dao LEE Lecture Hall"
+        android:textSize="14dp"
+        android:background="@drawable/buttonstyle"
+        android:layout_below="@+id/PosButton3"
+        android:layout_alignStart="@+id/PosButton3" />
+
+    <Button
+        android:id="@+id/PosButton5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingRight="0dp"
+        android:text="VIP Lounge"
+        android:textSize="14dp"
+        android:background="@drawable/buttonstyle"
+        android:layout_below="@+id/PosButton4"
+        android:layout_alignStart="@+id/PosButton4" />
+
+    <Button
+        android:id="@+id/PosButton6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingRight="0dp"
+        android:textSize="14dp"
+        android:background="@drawable/buttonstyle"
+        android:text="Tsung Dao LEE Science and Art Exhibition"
+        android:layout_below="@+id/PosButton5"
+        android:layout_alignStart="@+id/PosButton5" />
+
+    <Button
+        android:id="@+id/PosButton7"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingRight="0dp"
+        android:textSize="14dp"
+        android:background="@drawable/buttonstyle"
+        android:text="Glory &amp; Progress &amp; Contribution"
+        android:layout_below="@+id/PosButton6"
+        android:layout_alignStart="@+id/PosButton6" />
+
+    <Button
+        android:id="@+id/PosButton8"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingRight="0dp"
+        android:textSize="14dp"
+        android:background="@drawable/buttonstyle"
+        android:text="Superstring &amp; Science and Art Gallery"
+        android:layout_below="@+id/PosButton7"
+        android:layout_alignStart="@+id/PosButton7" />
+    <Button
+        android:id="@+id/PosButton9"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingRight="0dp"
+        android:textSize="14dp"
+        android:background="@drawable/buttonstyle"
+        android:text="Nobel Mountain"
+        android:layout_below="@+id/PosButton8"
+        android:layout_alignStart="@+id/PosButton8" />
+
+</RelativeLayout> 

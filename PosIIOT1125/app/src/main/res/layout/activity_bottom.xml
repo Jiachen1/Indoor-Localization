@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#eeeeee" >
+    <LinearLayout
+        android:id="@+id/ll_home"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical" >
+        <ImageView
+            android:id="@+id/iv_home"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:src="@drawable/map" />
+        <TextView
+            android:id="@+id/tv_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
+            android:text="定位"
+            android:textColor="#1B940A"
+            android:textSize="10dp"
+            android:textStyle="bold" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_address"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical" >
+        <ImageView
+            android:id="@+id/iv_address"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:src="@drawable/equip" />
+        <TextView
+            android:id="@+id/tv_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:layout_marginBottom="3dp"
+            android:text="设备"
+            android:textColor="#a7a7aa"
+            android:textSize="10dp"
+            android:textStyle="bold" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_friend"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical" >
+        <ImageView
+            android:id="@+id/iv_friend"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:src="@drawable/address" />
+        <TextView
+            android:id="@+id/tv_friend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:text="通讯录"
+            android:textColor="#a7a7aa"
+            android:textSize="10dp"
+            android:textStyle="bold" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_setting"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical" >
+        <ImageView
+            android:id="@+id/setting"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:src="@drawable/me" />
+        <TextView
+            android:id="@+id/tv_setting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:text="设置"
+            android:textSize="10dp"
+            android:textColor="#a7a7aa"
+            android:textStyle="bold" />
+    </LinearLayout>
+</LinearLayout>
