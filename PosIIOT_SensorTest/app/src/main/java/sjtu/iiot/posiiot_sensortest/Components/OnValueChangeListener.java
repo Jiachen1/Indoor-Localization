@@ -7,12 +7,12 @@ import java.util.Objects;
  */
 public interface OnValueChangeListener {
 
-    void OnValueChange(final ListenerType Type, final int DataSize, final float[] data,String Mac);
+    void OnValueChange(final ListenerType Type, final int DataSize, final float[] data);
 
     /* define Null Adapter class for that interface */
     public static class Null implements OnValueChangeListener{
         @Override
-        public void OnValueChange(final ListenerType Type, final int DataSize, final float[] data,String Mac) {}
+        public void OnValueChange(final ListenerType Type, final int DataSize, final float[] data) {}
     }
 
     public static enum ListenerType
@@ -20,6 +20,7 @@ public interface OnValueChangeListener {
         Compass,
         Acceleration,
         BLE,
+        WiFi;
     }
 
 }

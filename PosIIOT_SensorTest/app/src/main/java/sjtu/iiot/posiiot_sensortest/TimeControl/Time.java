@@ -1,7 +1,9 @@
 package sjtu.iiot.posiiot_sensortest.TimeControl;
 
+import android.util.Log;
+
 import sjtu.iiot.posiiot_sensortest.Buffer.Data;
-import sjtu.iiot.posiiot_sensortest.Kalman;
+import sjtu.iiot.posiiot_sensortest.Fragment.TestFragment;
 
 /**
  * Created by sunjiachen on 16/8/15.
@@ -64,8 +66,9 @@ public class Time {
             while (!isInterrupted) {
                 while (!isPause) {
                     try {
-                        Thread.sleep(2000);
+                        Thread.sleep(20);
                         //Log.i("system", "I AM RUNNING" );
+                        Data.setFlag(true);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }

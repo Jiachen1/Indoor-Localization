@@ -4,12 +4,43 @@ package sjtu.iiot.posiiot_sensortest.Buffer;
  * Created by sunjiachen on 16/8/14.
  */
 public class Data {
+    private static boolean Flag = true;
+    private static StringBuffer BufferData = new StringBuffer();
+    private static StringBuffer BufferProfile = new StringBuffer();
 
-    private static StringBuffer BufferBLE = new StringBuffer();
-    public static void setBufferBlE(StringBuffer d) {BufferBLE = d;}
-    public static StringBuffer getBufferBLE() {return BufferBLE;}
-    public static void refreshBufferBlE()
+    public static StringBuffer getBufferData()
     {
-        BufferBLE.delete(0,BufferBLE.length());
+        return BufferData;
+    }
+
+    public static void setBufferData(StringBuffer a)
+    {
+        BufferData = a;
+    }
+
+    public static StringBuffer getBufferProfile()
+    {
+        return BufferProfile;
+    }
+
+    public static void setBufferProfile(StringBuffer b)
+    {
+        BufferProfile = b;
+    }
+    public static boolean getFlag()
+    {
+        return Flag;
+    }
+    public static void setFlag(boolean c)
+    {
+        Flag = c;
+    }
+    public static void refreshBufferData ()
+    {
+        BufferData.delete(0,BufferData.length());
+    }
+    public static void refreshBufferProfile()
+    {
+        BufferProfile.delete(0,BufferProfile.length());
     }
 }

@@ -1,6 +1,5 @@
 package sjtu.iiot.posiiot_sensortest.Fragment;
 
-import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -19,11 +18,9 @@ import android.app.AlertDialog;
 import java.text.DecimalFormat;
 
 import sjtu.iiot.posiiot_sensortest.Buffer.Data;
-import sjtu.iiot.posiiot_sensortest.Components.CoordinateHelper;
 import sjtu.iiot.posiiot_sensortest.Components.OnValueChangeListener;
-import sjtu.iiot.posiiot_sensortest.Components.iBeaconManager;
-import sjtu.iiot.posiiot_sensortest.Components.iBeaconScanner;
-import sjtu.iiot.posiiot_sensortest.FilePro.MyDate;
+import sjtu.iiot.posiiot_sensortest.Components.StepTest;
+import sjtu.iiot.posiiot_sensortest.FilePro.FileWrite;
 import sjtu.iiot.posiiot_sensortest.R;
 import sjtu.iiot.posiiot_sensortest.TimeControl.Time;
 
@@ -33,17 +30,16 @@ import sjtu.iiot.posiiot_sensortest.TimeControl.Time;
  */
 public class TestFragment extends Fragment{
 
-    private Button ReStartButton;
+    private Button StartButton;
     private OnValueChangeListener mOnValueChangeListener;
-    //private StepTest mStepTest = null;
+    private StepTest mStepTest = null;
     private View v;
-
-    private iBeaconScanner mIBeaconScanner;
-    private iBeaconManager mIBeaconManager;
-
     private Context mContext;
-    private boolean Testing =false;
+    private boolean Testing = false;
     private boolean Tested = false;
+    private boolean Reset = false;
+    private TextView Compass_Value;
+    private TextView Accel_Value;
 
     DecimalFormat fnum = new DecimalFormat("##0.000");
     @Override
@@ -52,33 +48,25 @@ public class TestFragment extends Fragment{
         v = inflater.inflate(R.layout.test_setting, container, false);
         mContext = this.getContext();
         Log.d("System_Debug", "Enter Test Fragment!" );
-
-        mIBeaconManager = new iBeaconManager(1);
-        /* Test iBeacon */
-        mIBeaconManager.AddiBeacon("20:C3:8F:D1:75:6B", CoordinateHelper.Init(1, 670, 500),0);        //50A
-        mIBeaconManager.AddiBeacon("20:C3:8F:D1:E7:1B", CoordinateHelper.Init(1, 670, 950),0);      //46a
-        mIBeaconManager.AddiBeacon("84:EB:18:58:A4:56", CoordinateHelper.Init(1, 50, 950),0);       //197b
-        mIBeaconManager.AddiBeacon("20:C3:8F:D1:75:2F", CoordinateHelper.Init(1, 50, 500),0);      //24a
-        mIBeaconManager.AddiBeacon("84:EB:18:58:A4:6A", CoordinateHelper.Init(1, 50, 50),0);      //24a
-        mIBeaconManager.AddiBeacon("20:C3:8F:D1:E7:4F", CoordinateHelper.Init(1, 670, 50), 0);      //24a
-
-        ReStartButton = (Button) v.findViewById(R.id.ReStartButton);
-        ReStartButton.setOnClickListener(new OnClickListener() {
+        StartButton = (Button) v.findViewById(R.id.StartButton);
+        StartButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!Testing && Tested) {
 
                     new AlertDialog.Builder(getActivity())
                             .setTitle("确认" )
-                            .setMessage("重新测试最新的测量结果将丢失" )
+                            .setMessage("重新测试最新的测量结果将丢失，如需保存，请点击取消后选择生成日志" )
                             .setPositiveButton("确定", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     // TODO Auto-generated method stub
-                                    Data.refreshBufferBlE();
+                                    Data.refreshBufferData();
                                     Log.d("System_Debug", "Start Test!" );
                                     Testing = true;
-                                    ReStartButton.setText("停止测试" );
+                                    StartButton.setText("停止测试" );
+                                    mStepTest = new StepTest(mContext, mOnValueChangeListener);
+                                    mStepTest.start();
                                     Time.getIn().Restart();
                                 }
                             })
@@ -96,21 +84,15 @@ public class TestFragment extends Fragment{
                     if (!Testing) {
                         Log.d("System_Debug", "Start Test!" );
                         Testing = true;
-                        ReStartButton.setText("停止测试" );
-                        mIBeaconScanner=new iBeaconScanner(mContext,mOnValueChangeListener);
-                        //Check whether BT is OK
-                        if(mIBeaconScanner.checkBleHardwareAvailable() == false) {
-                            Log.e("System", "No BT");
-                        }
-                        // initialize BleWrapper object
-                        mIBeaconScanner.initialize();
-                        mIBeaconScanner.SetManager(mIBeaconManager);
-                        mIBeaconScanner.beginScanning();
+                        StartButton.setText("停止测试" );
+                        mStepTest = new StepTest(mContext, mOnValueChangeListener);
+                        mStepTest.start();
                         Time.getIn().Restart();
                     } else {
                         Testing = false;
                         Tested = true;
-                        ReStartButton.setText("重新开始" );
+                        StartButton.setText("重新开始" );
+                        mStepTest.stop();
                         Time.getIn().Pause();
                     }
                 }
@@ -118,17 +100,30 @@ public class TestFragment extends Fragment{
             }
         });
 
+        Compass_Value = (TextView)v.findViewById(R.id.Compass_Value);
+        Accel_Value = (TextView)v.findViewById(R.id.Accel_Value);
         mOnValueChangeListener = new OnValueChangeListener() {
             @Override
-            public void OnValueChange(ListenerType Type, int DataSize, float[] data,String mac) {
+            public void OnValueChange(ListenerType Type, int DataSize, float[] data) {
                 switch (Type)
                 {
                     case Compass:
-                        break;
+                        Compass_Value.setText("G-X:" + fnum.format(data[0]) + " / G-Y:" + fnum.format(data[1]) + " / G-Z:" + fnum.format(data[2]));
+                        if(Data.getFlag() == true) {
+                            Data.setBufferData(Data.getBufferData().append("1 " + fnum.format(data[0]) + " " + fnum.format(data[1]) + " " + fnum.format(data[2]) + "\n" ));
+                            Data.setFlag(false);
+                        }
+                            break;
                     case Acceleration:
-                        break;
+                        Accel_Value.setText("A-X:" + fnum.format(data[0]) + " / A-Y:" + fnum.format(data[1]) + " / A-Z:" + fnum.format(data[2]));
+                        if(Data.getFlag() == true) {
+                            Data.setBufferData(Data.getBufferData().append("2 " + fnum.format(data[0]) + " " + fnum.format(data[1]) + " " + fnum.format(data[2]) + "\n" ));
+                            Data.setFlag(false);
+                        }
+                            break;
                     case BLE:
-                        Data.setBufferBlE(Data.getBufferBLE().append(mac + " " + data[0] + " " + MyDate.getDateEN()+"\n"));
+                        break;
+                    case WiFi:
                         break;
                     default:
                         break;
